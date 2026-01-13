@@ -1,0 +1,29 @@
+{
+  "name": "com.miikaelv.dualgrid-procgen",
+  "version": "1.0.0",
+  "displayName": "Dual Grid",
+  "description": "An optimized dual grid system made for procedural generation.",
+  "documentationUrl": "https://github.com/miikaelv/dualgrid-procgen/README.md",
+  "keywords": [
+    "2d",
+    "procedural-generation",
+    "dual-grid",
+    "tilemap"
+  ],
+  "author": {
+    "name": "miikaelv",
+    "email": "miikaelvuorio@protonmail.com"
+  },
+  "category": "2D",
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "12.0.0"
+  },
+  "unity": "2021.3",
+  "samples": [
+    {
+      "displayName": "Map Generation Sample",
+      "description": "A simple scene and a DualGrid material with an example map generation script using Perlin noise.",
+      "path": "Samples~/SampleScene"
+    }
+  ]
+}
