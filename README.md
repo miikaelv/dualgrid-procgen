@@ -18,7 +18,7 @@
 1. Open the **Package Manager** (`Window > Package Manager`).
 2. Click the **+** icon and select **Add package from git URL...**.
 3. Paste the following:
-   `https://github.com/yourusername/dualgrid-procgen.git`
+   `https://github.com/miikaelv/dualgrid-procgen.git`
 
 
 ## Getting Started
