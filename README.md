@@ -11,7 +11,6 @@
 * **Editor Integration:** Quick-create system via the `GameObject` menu.
 * **Optimized Data Flow:** Uses an `R8` texture format to pass tile indices to the GPU, ensuring a tiny memory footprint and high performance for dynamic updates.
 
----
 
 ## Installation
 
@@ -21,7 +20,6 @@
 3. Paste the following:
    `https://github.com/yourusername/dualgrid-unityshader.git`
 
----
 
 ## Getting Started
 
