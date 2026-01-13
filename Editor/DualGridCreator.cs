@@ -6,7 +6,7 @@ namespace DualGrid.Editor
     public static class DualGridCreator
     {
         private const string MenuPath = "GameObject/DualGrid/DualGrid";
-        private const string PrefabPath = "Packages/com.miikaelv.dualgrid-unityshader/Core/DualGridPrefab.prefab";
+        private const string PrefabPath = "Packages/com.miikaelv.dualgrid-procgen/Core/DualGridPrefab.prefab";
 
         [MenuItem(MenuPath, false, 10)]
         private static void Create(MenuCommand menuCommand)
@@ -15,7 +15,7 @@ namespace DualGrid.Editor
 
             if (prefab == null)
             {
-                Debug.LogError($"[dualgrid-unityshader] Could not find prefab at: {PrefabPath}");
+                Debug.LogError($"[dualgrid-procgen] Could not find prefab at: {PrefabPath}");
                 return;
             }
 

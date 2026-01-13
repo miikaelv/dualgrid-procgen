@@ -13,7 +13,7 @@ namespace DualGrid.Samples.SampleScene
         [Header("Settings")] [SerializeField] private int MapWidth;
         [SerializeField] private int MapHeight;
         [SerializeField, Range(0f, 1f)] private float LandGenerationThreshold;
-        [SerializeField, Range(0.01f, 0.15f)] private float Scale;
+        [SerializeField, Range(0.005f, 0.05f)] private float Scale;
         
         public void GenerateMap()
         {

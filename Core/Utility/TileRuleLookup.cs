@@ -2,11 +2,11 @@ namespace DualGrid.Core.Utility
 {
     public class TileRuleLookup
     {
-        private readonly int[] TileIndexesByBitmask;
+        private readonly int[] TileIndicesByBitmask;
 
         public TileRuleLookup()
         {
-            TileIndexesByBitmask = new int[16];
+            TileIndicesByBitmask = new int[16];
 
             for (var i = 0; i < 16; i++)
             {
@@ -19,7 +19,7 @@ namespace DualGrid.Core.Utility
                 mask |= rule.Item3 ? 1 << 2 : 0; // BottomLeft
                 mask |= rule.Item4 ? 1 << 3 : 0; // BottomRight
 
-                TileIndexesByBitmask[mask] = i;
+                TileIndicesByBitmask[mask] = i;
             }
         }
         
@@ -31,19 +31,19 @@ namespace DualGrid.Core.Utility
             bitmask |= bottomLeft ? 1 << 2 : 0;
             bitmask |= bottomRight ? 1 << 3 : 0;
             
-            tile = TileIndexesByBitmask[bitmask];
+            tile = TileIndicesByBitmask[bitmask];
             return true;
         }
 
         public bool TryGetTileIndexByBitmask(int bitmask, out int tile)
         {
-            if (bitmask >= TileIndexesByBitmask.Length || bitmask < 0)
+            if (bitmask >= TileIndicesByBitmask.Length || bitmask < 0)
             {
                 tile = -1;
                 return false;
             }
 
-            tile = TileIndexesByBitmask[bitmask];
+            tile = TileIndicesByBitmask[bitmask];
             return true;
         }
 

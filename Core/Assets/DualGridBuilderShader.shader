@@ -2,8 +2,8 @@ Shader "DualGrid/DualGridBuilderShader"
 {
     Properties
     {
-        [MainTexture] _BaseMap ("Sprite Sheet (4x4)", 2D) = "white" {}
-        _DataMap ("Data Texture (Tile Indexes)", 2D) = "white" {}
+        [NoScaleOffset] [MainTexture] _BaseMap ("Sprite Sheet (4x4)", 2D) = "white" {}
+        [NoScaleOffset] _DataMap ("Data Texture (Tile Indices)", 2D) = "white" {}
         _GridSize ("Grid Dimensions", Vector) = (10, 10, 0, 0)
     }
 
@@ -11,9 +11,8 @@ Shader "DualGrid/DualGridBuilderShader"
     {
         Tags
         {
-            "RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline"
+            "RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline" "DualGridBuilder"="True"
         }
-        LOD 100
 
         Pass
         {
@@ -41,7 +40,6 @@ Shader "DualGrid/DualGridBuilderShader"
             SAMPLER(sampler_DataMap);
 
             CBUFFER_START(UnityPerMaterial)
-                float4 _BaseMap_ST;
                 float4 _GridSize;
             CBUFFER_END
 
@@ -49,27 +47,25 @@ Shader "DualGrid/DualGridBuilderShader"
             {
                 varyings output;
                 output.position_cs = TransformObjectToHClip(input.position_os.xyz);
-                output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
+                output.uv = input.uv;
                 return output;
             }
             
             half4 frag (varyings input) : SV_Target
             {
-                // Use Point Sampling to get red channel value
-                float raw_index = SAMPLE_TEXTURE2D_LOD(_DataMap, sampler_DataMap, input.uv, 0).r;
+                // Sample DataMap red channel for raw tile index value
+                float raw_index = _DataMap.SampleLevel(sampler_DataMap, input.uv, 0).r;
                 
                 // Convert 0-1 range to the tile int index
                 float tile_index = round(raw_index * 255.0);
                 
-                // Convert input-uv to "tile-space"
-                float2 local_uv = frac(input.uv * _GridSize.xy);
-
-                // Convert tile index to 4x4 grid (0 is bottom-left)
+                // Convert index to column/row
                 float col = fmod(tile_index, 4.0);
-                float row = floor(tile_index / 4.0);
-                
-                // Each tile is 0.25 (1/4) of the sheet
+                float row = floor(tile_index * 0.25f);
+
+                // Calculate point to sample from inside tile bounds
                 float2 tile_offset = float2(col, row) * 0.25;
+                float2 local_uv = frac(input.uv * _GridSize.xy);
                 float2 final_uv = tile_offset + local_uv * 0.25;
 
                 return SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, final_uv);
