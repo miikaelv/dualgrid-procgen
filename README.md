@@ -1,6 +1,6 @@
 # DualGrid for Unity (URP)
 
-**DualGrid** is a high-performance, GPU-accelerated tiling system for Unity’s Universal Render Pipeline. It implements the Dual Grid technique to automate tile transitions, allowing you to create organic-looking maps using a simple boolean data grid (e.g. solid vs. empty) and a single 16-tile sprite sheet.
+**DualGrid** is a high-performance, GPU-accelerated tiling system for Unity’s Universal Render Pipeline. It implements the Dual Grid technique to automate tile transitions, allowing you to create organic-looking maps using a simple boolean data grid (e.g. solid vs. empty) and a single 16-tile sprite sheet. Made with run-time performance and procedural generation in mind.
 
 
 
@@ -11,7 +11,6 @@
 * **Editor Integration:** Quick-create system via the `GameObject` menu.
 * **Optimized Data Flow:** Uses an `R8` texture format to pass tile indices to the GPU, ensuring a tiny memory footprint and high performance for dynamic updates.
 
----
 
 ## Installation
 
@@ -19,9 +18,8 @@
 1. Open the **Package Manager** (`Window > Package Manager`).
 2. Click the **+** icon and select **Add package from git URL...**.
 3. Paste the following:
-   `https://github.com/yourusername/dualgrid-unityshader.git`
+   `https://github.com/miikaelv/dualgrid-procgen.git`
 
----
 
 ## Getting Started
 
