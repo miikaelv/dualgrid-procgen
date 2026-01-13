@@ -6,7 +6,7 @@ namespace DualGrid.Editor
     public static class DualGridCreator
     {
         private const string MenuPath = "GameObject/DualGrid/DualGrid";
-        private const string PrefabPath = "Packages/com.miikaelv.dualgrid-procgen/Core/DualGridPrefab.prefab";
+        private const string PrefabPath = "Packages/com.miikaelv.dualgrid-procgen/Core/Assets/DualGridPrefab.prefab";
 
         [MenuItem(MenuPath, false, 10)]
         private static void Create(MenuCommand menuCommand)
