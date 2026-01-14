@@ -24,10 +24,11 @@ namespace DualGrid.Samples.SampleScene
                 return;
             }
 
+            // Generate and draw dual grid map
             var dataMap = GenerateDataMap(MapWidth, MapHeight, Scale, LandGenerationThreshold);
             Map.DrawRenderMap(TilemapMaterial, dataMap);
 
-            // Set camera to look at the whole generated map
+            // Set camera to look at the generated map
             MainCamera.orthographic = true;
             MainCamera.orthographicSize = MapHeight / 2f;
             MainCamera.transform.position =
@@ -35,7 +36,7 @@ namespace DualGrid.Samples.SampleScene
             MainCamera.transform.LookAt(GridRenderer.transform);
         }
 
-        private static bool[,] GenerateDataMap(int width, int height, float scale, float threshold)
+        private static bool[,] GenerateDataMap(int width, int height, float scale, float landThreshold)
         {
             var map = new bool[width, height];
 
@@ -48,7 +49,7 @@ namespace DualGrid.Samples.SampleScene
 
                     var noiseValue = Mathf.PerlinNoise(sampleX, sampleY);
 
-                    map[x, y] = noiseValue > threshold;
+                    map[x, y] = noiseValue > landThreshold;
                 }
             }
 

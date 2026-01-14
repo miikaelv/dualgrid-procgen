@@ -3,8 +3,8 @@ Shader "DualGrid/DualGridBuilderShader"
     Properties
     {
         [NoScaleOffset] [MainTexture] _BaseMap ("Sprite Sheet (4x4)", 2D) = "white" {}
-        [NoScaleOffset] _DataMap ("Data Texture (Tile Indices)", 2D) = "white" {}
-        _GridSize ("Grid Dimensions", Vector) = (10, 10, 0, 0)
+        [HideInInspector] [NoScaleOffset] _DataMap ("Data Texture (Tile Indices)", 2D) = "white" {}
+        [HideInInspector] _GridSize ("Grid Dimensions", Vector) = (10, 10, 0, 0)
     }
 
     SubShader
@@ -54,14 +54,14 @@ Shader "DualGrid/DualGridBuilderShader"
             half4 frag (varyings input) : SV_Target
             {
                 // Sample DataMap red channel for raw tile index value
-                float raw_index = _DataMap.SampleLevel(sampler_DataMap, input.uv, 0).r;
+                half raw_index = _DataMap.Sample(sampler_DataMap, input.uv, 0).r;
                 
-                // Convert 0-1 range to the tile int index
-                float tile_index = round(raw_index * 255.0);
+                // Convert 0-1 range to the tile int index from byte
+                half tile_index = raw_index * 254.999h;
                 
                 // Convert index to column/row
-                float col = fmod(tile_index, 4.0);
-                float row = floor(tile_index * 0.25f);
+                half row = floor(tile_index * 0.25f);
+                half col = tile_index - row * 4.0;
 
                 // Calculate point to sample from inside tile bounds
                 float2 tile_offset = float2(col, row) * 0.25;

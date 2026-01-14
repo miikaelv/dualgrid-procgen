@@ -8,9 +8,15 @@ namespace DualGrid.Core
         [SerializeField] private MeshRenderer MeshRenderer;
         [SerializeField] private MeshFilter MeshFilter;
 
+        public bool SetGridScaleAutomatically = true;
+        public bool SetGridPositionAutomatically = true;
+
         private static readonly int DataMapProperty = Shader.PropertyToID("_DataMap");
         private static readonly int GridSizeProperty = Shader.PropertyToID("_GridSize");
 
+        /// <summary>
+        /// Sets the DataMap of the shader to null, so all tiles are drawn as false (empty).
+        /// </summary>
         public void ClearGrid()
         {
             if (MeshRenderer.material != null)
@@ -30,10 +36,14 @@ namespace DualGrid.Core
             }
 
             // Set grid scale to match grid size, results in tile size 1
-            transform.localScale = new Vector3(width, height, 1f);
+            if (SetGridScaleAutomatically)
+                transform.localScale = new Vector3(width, height, 1f);
+            
             // Set grid "pivot" to parent at bottom left corner and offset by -0.5f to match with data grid 
-            transform.localPosition = new Vector3(width / 2f - 0.5f, height / 2f - 0.5f, 0);
+            if (SetGridPositionAutomatically)
+                transform.localPosition = new Vector3(width / 2f - 0.5f, height / 2f - 0.5f, 0);
 
+            // Draw to material texture
             var dataTexture = CreateDataTexture(tileIndices, width, height);
             MeshRenderer.material = dualGridMaterial;
             MeshRenderer.material.SetTexture(DataMapProperty, dataTexture);
