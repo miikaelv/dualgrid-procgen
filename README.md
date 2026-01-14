@@ -22,6 +22,16 @@
 
 ## Getting Started
 
+### Importing the SampleScene
+
+To quickly try out the package, you can import the provided `SampleScene`:
+
+1. Open **Window → Package Manager** in Unity.
+2. Select this package from the list.
+3. Click the **Samples** button in the package details.
+4. Click **Import** next to `Map Generation Sample`.
+
+### How to use
 ### 1. Create the DualGrid Object
 Right-click in the **Hierarchy** or use the top menu:  
 `GameObject > DualGrid > DualGrid`
