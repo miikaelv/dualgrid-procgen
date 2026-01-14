@@ -6,11 +6,12 @@ namespace DualGrid.Core.Utility
 
         public TileRuleLookup()
         {
+            // Store rule bitmask for each index of tiles in a dual grid sprite sheet
             TileIndicesByBitmask = new int[16];
 
             for (var i = 0; i < 16; i++)
             {
-                var rule = RuleTemplates3[i];
+                var rule = RuleTemplates[i];
                 var mask = 0;
 
                 // Combine booleans into one integer using a Bitmask
@@ -23,7 +24,7 @@ namespace DualGrid.Core.Utility
             }
         }
         
-        public bool TryGetTileIndexByRules(bool topLeft, bool topRight, bool bottomLeft, bool bottomRight, out int tile)
+        public int GetRenderTileIndexByNeighbours(bool topLeft, bool topRight, bool bottomLeft, bool bottomRight)
         {
             var bitmask = 0;
             bitmask |= topLeft ? 1 << 0 : 0; 
@@ -31,15 +32,14 @@ namespace DualGrid.Core.Utility
             bitmask |= bottomLeft ? 1 << 2 : 0;
             bitmask |= bottomRight ? 1 << 3 : 0;
             
-            tile = TileIndicesByBitmask[bitmask];
-            return true;
+            return TileIndicesByBitmask[bitmask];
         }
 
-        public bool TryGetTileIndexByBitmask(int bitmask, out int tile)
+        public bool TryGetRenderTileIndexByRuleBitmask(int bitmask, out int tile)
         {
             if (bitmask >= TileIndicesByBitmask.Length || bitmask < 0)
             {
-                tile = -1;
+                tile = 0;
                 return false;
             }
 
@@ -48,8 +48,8 @@ namespace DualGrid.Core.Utility
         }
 
         // Index 0 starting from bottom left of sprite sheet going right and up.
-        // Booleans are in order: topLeft, topRight, bottomLeft, bottomRight
-        private static readonly (bool, bool, bool, bool)[] RuleTemplates3 =
+        // Booleans are the neighbours in order: topLeft, topRight, bottomLeft, bottomRight
+        private static readonly (bool, bool, bool, bool)[] RuleTemplates =
         {
             (false, false, false, false), // Index 0
             (false, false, false, true),  // Index 1

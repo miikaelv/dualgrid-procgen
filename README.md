@@ -9,8 +9,7 @@
 * **GPU-Powered:** Renders the entire map on a single quad using a custom HLSL shader.
 * **Zero-Boilerplate Autotiling:** Only requires a 16-tile sprite sheet to handle all corner transitions.
 * **Editor Integration:** Quick-create system via the `GameObject` menu.
-* **Optimized Data Flow:** Uses an `R8` texture format to pass tile indices to the GPU, ensuring a tiny memory footprint and high performance for dynamic updates.
-
+* **Sample Included:** Includes optional sample scene in Samples with simple Perlin noise map generation to get you started quickly.
 
 ## Installation
 
@@ -38,7 +37,7 @@ This instantiates the `DualGridPrefab`, which comes pre-configured with the `Dua
     * **Wrap Mode:** Clamp
 
 ### 3. Usage via Code
-Pass a 2D boolean array (your logical map) to the `DualGridMap` component:
+Pass a 2D boolean array (your data map) to the `DualGridMap` component:
 
 ```csharp
 using DualGrid.Core;

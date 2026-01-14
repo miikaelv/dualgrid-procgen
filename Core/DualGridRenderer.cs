@@ -29,8 +29,9 @@ namespace DualGrid.Core
                 return;
             }
 
-            // Set grid scale (tile size 1), and dual grid offset to parent
+            // Set grid scale to match grid size, results in tile size 1
             transform.localScale = new Vector3(width, height, 1f);
+            // Set grid "pivot" to parent at bottom left corner and offset by -0.5f to match with data grid 
             transform.localPosition = new Vector3(width / 2f - 0.5f, height / 2f - 0.5f, 0);
 
             var dataTexture = CreateDataTexture(tileIndices, width, height);

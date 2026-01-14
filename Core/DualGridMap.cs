@@ -28,19 +28,16 @@ namespace DualGrid.Core
             {
                 for (var x = 0; x < renderWidth; x++)
                 {
-                    var topLeftNeighbour = dataMap.HasPosition(x - 1, y, dataWidth, dataHeight);
-                    var topRightNeighbour = dataMap.HasPosition(x, y, dataWidth, dataHeight);
-                    var bottomLeftNeighbour = dataMap.HasPosition(x - 1, y - 1, dataWidth, dataHeight);
-                    var bottomRightNeighbour = dataMap.HasPosition(x, y - 1, dataWidth, dataHeight);
+                    var topLeftNeighbour = dataMap.GetPositionValueOrDefault(x - 1, y, dataWidth, dataHeight);
+                    var topRightNeighbour = dataMap.GetPositionValueOrDefault(x, y, dataWidth, dataHeight);
+                    var bottomLeftNeighbour = dataMap.GetPositionValueOrDefault(x - 1, y - 1, dataWidth, dataHeight);
+                    var bottomRightNeighbour = dataMap.GetPositionValueOrDefault(x, y - 1, dataWidth, dataHeight);
 
-                    if (!TileRuleLookup.TryGetTileIndexByRules(topLeftNeighbour, topRightNeighbour, bottomLeftNeighbour,
-                            bottomRightNeighbour, out var tileIndex))
-                    {
-                        Debug.LogError(
-                            $"No rule match for {topLeftNeighbour} : {topRightNeighbour} : {bottomLeftNeighbour} : {bottomRightNeighbour}");
-
-                        return;
-                    }
+                    var tileIndex = TileRuleLookup.GetRenderTileIndexByNeighbours(
+                        topLeftNeighbour,
+                        topRightNeighbour,
+                        bottomLeftNeighbour,
+                        bottomRightNeighbour);
 
                     tileIndices[currentIndex] = tileIndex;
                     currentIndex++;
@@ -50,9 +47,9 @@ namespace DualGrid.Core
             GridRenderer.DrawMapToTexture(tilemapMaterial, tileIndices, renderWidth, renderHeight);
 
             stopwatch.Stop();
-            Debug.Log($"DualGrid tilemap created in {stopwatch.Elapsed.TotalMilliseconds:F2}ms");
+            Debug.Log($"DualGrid tilemap {dataWidth}x{dataHeight} created in {stopwatch.Elapsed.TotalMilliseconds:F2}ms");
         }
-        
+
         public void ClearGrid() => GridRenderer.ClearGrid();
     }
 }

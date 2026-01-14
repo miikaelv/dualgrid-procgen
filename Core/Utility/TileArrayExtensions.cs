@@ -1,10 +1,15 @@
+using System.Runtime.CompilerServices;
+
 namespace DualGrid.Core.Utility
 {
     public static class TileArrayExtensions
     {
-        public static bool HasPosition(this bool[,] map, int x, int y, int width, int height)
+        // Tell JIT to inline for performance, while maintaining clean look in loop
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GetPositionValueOrDefault(this bool[,] map, int x, int y, int width, int height)
         {
-            if (x < 0 || x >= width || y < 0 || y >= height) return false;
+            // Cast to uint handles both the negative and the upper-bounds check
+            if ((uint)x >= (uint)width || (uint)y >= (uint)height) return false;
 
             return map[x, y];
         }
