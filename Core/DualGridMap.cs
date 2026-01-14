@@ -9,7 +9,6 @@ namespace DualGrid.Core
     {
         private static readonly TileRuleLookup TileRuleLookup = new();
         [SerializeField] private DualGridRenderer GridRenderer;
-        [SerializeField] private ComputeShader DualGridComputeShader;
 
         public void DrawRenderMap(Material tilemapMaterial, bool[,] dataMap)
         {

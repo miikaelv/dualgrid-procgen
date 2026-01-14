@@ -57,7 +57,7 @@ Shader "DualGrid/DualGridBuilderShader"
                 half raw_index = _DataMap.Sample(sampler_DataMap, input.uv, 0).r;
                 
                 // Convert 0-1 range to the tile int index from byte
-                half tile_index = raw_index * 254.999h;
+                half tile_index = raw_index * 255.0h;
                 
                 // Convert index to column/row
                 half row = floor(tile_index * 0.25f);

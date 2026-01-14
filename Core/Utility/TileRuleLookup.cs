@@ -5,8 +5,8 @@ namespace DualGrid.Core.Utility
 {
     public class TileRuleLookup
     {
-        private readonly int[] TileIndicesByBitmask;
-        private readonly int[] TileRuleBitmasksByIndex;
+        public readonly int[] TileIndicesByBitmask;
+        public readonly int[] TileRuleBitmasksByIndex;
 
         public TileRuleLookup()
         {
