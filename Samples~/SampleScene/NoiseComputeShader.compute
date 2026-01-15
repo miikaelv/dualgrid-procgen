@@ -1,0 +1,46 @@
+#pragma kernel CSMain
+
+int Width;
+int Height;
+float Scale;
+float Threshold;
+
+// Data grid as 1D array of width * height. Values must be stored as 0 or 1.
+RWStructuredBuffer<int> Result;
+
+float Hash(int2 p)
+{
+    uint h = uint(p.x) * 374761393u + uint(p.y) * 668265263u;
+    h = (h ^ h >> 13) * 1274126177u;
+    return (h & 0x00FFFFFFu) / 16777216.0;
+}
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)Width || id.y >= (uint)Height)
+        return;
+
+    // Generate noise
+    float2 p = float2(id.x, id.y) * Scale;
+
+    int2 ip = int2(floor(p));
+    float2 f = frac(p);
+
+    float2 u = f * f * (3.0 - 2.0 * f);
+
+    float a = Hash(ip);
+    float b = Hash(ip + int2(1, 0));
+    float c = Hash(ip + int2(0, 1));
+    float d = Hash(ip + int2(1, 1));
+
+    float value =
+        lerp(
+            lerp(a, b, u.x),
+            lerp(c, d, u.x),
+            u.y
+        );
+
+    // Convert into 0 or 1 to be compatible with DualGridBuilderShader
+    Result[id.y * Width + id.x] = value > Threshold ? 1 : 0;
+}

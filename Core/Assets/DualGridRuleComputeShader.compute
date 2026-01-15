@@ -1,0 +1,42 @@
+#pragma kernel CSMain
+
+StructuredBuffer<int> TileRuleLookup;
+StructuredBuffer<int> DataBuffer;
+RWTexture2D<float> TileIndices;
+
+int DataWidth;
+int DataHeight;
+int RenderWidth;
+int RenderHeight;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint2 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)RenderWidth || id.y >= (uint)RenderHeight)
+        return;
+
+    uint width = DataWidth;
+    uint height = DataHeight;
+
+    uint x = id.x;
+    uint y = id.y;
+    uint x_minus1 = x - 1;
+    uint y_minus1 = y - 1;
+
+    bool x_valid = x < width;
+    bool x_offset_valid = x_minus1 < width;
+    bool y_valid = y < height;
+    bool y_offset_valid = y_minus1 < height;
+
+    int y_array_offset = y * width;
+    int y_array_minus1_offset = y_minus1 * width;
+
+    int top_left = x_offset_valid & y_valid ? DataBuffer[y_array_offset + x_minus1] : 0;
+    int top_right = x_valid & y_valid ? DataBuffer[y_array_offset + x] : 0;
+    int bottom_left = x_offset_valid & y_offset_valid ? DataBuffer[y_array_minus1_offset + x_minus1] : 0;
+    int bottom_right = x_valid & y_offset_valid ? DataBuffer[y_array_minus1_offset + x] : 0;
+
+    int bitmask = top_left | (top_right << 1) | (bottom_left << 2) | (bottom_right << 3);
+
+    TileIndices[id.xy] = (float)TileRuleLookup[bitmask] / 255.0f;
+}

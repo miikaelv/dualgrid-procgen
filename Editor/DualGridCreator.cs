@@ -1,3 +1,4 @@
+using DualGrid.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,10 +7,13 @@ namespace DualGrid.Editor
     public static class DualGridCreator
     {
         private const string MenuPath = "GameObject/DualGrid/DualGrid";
-        private const string PrefabPath = "Packages/com.miikaelv.dualgrid-procgen/Core/Assets/DualGridPrefab.prefab";
+        private const string PackagePath = "Packages/com.miikaelv.dualgrid-procgen/";
+        private static readonly string PrefabPath = $"{PackagePath}Core/Assets/DualGridPrefab.prefab";
+        private static readonly string
+            ComputeShaderPath = $"{PackagePath}Core/Assets/DualGridRuleComputeShader.compute";
 
         [MenuItem(MenuPath, false, 10)]
-        private static void Create(MenuCommand menuCommand)
+        private static void CreateDualGrid(MenuCommand menuCommand)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
 
@@ -20,9 +24,6 @@ namespace DualGrid.Editor
             }
 
             var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
-    
-            instance.name = "DualGrid";
-
             GameObjectUtility.SetParentAndAlign(instance, menuCommand.context as GameObject);
 
             Undo.RegisterCreatedObjectUndo(instance, "Create DualGrid Object");
@@ -35,6 +36,10 @@ namespace DualGrid.Editor
                     InteractionMode.AutomatedAction
                 );
             }
+            
+            instance.name = "DualGrid";
+            instance.GetComponent<DualGridMap>().DualGridComputeShader =
+                AssetDatabase.LoadAssetAtPath<ComputeShader>(ComputeShaderPath);
 
             Selection.activeObject = instance;
         }

@@ -391,10 +391,13 @@ MonoBehaviour:
   Map: {fileID: 3750396103782625556}
   GridRenderer: {fileID: 2657800623711110825}
   MainCamera: {fileID: 519420031}
+  NoiseShader: {fileID: 7200000, guid: 83786ebbe8d694c609982b36e1706c7f, type: 3}
+  Mode: 0
+  TilemapCellSize: 1
   MapWidth: 1000
   MapHeight: 1000
-  LandGenerationThreshold: 0.413
-  Scale: 0.0057
+  LandGenerationThreshold: 0.5
+  Scale: 0.005
 --- !u!4 &1111375599
 Transform:
   m_ObjectHideFlags: 0
@@ -747,6 +750,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: DualGrid::DualGrid.Core.DualGridRenderer
   MeshRenderer: {fileID: 7292057214591606799}
   MeshFilter: {fileID: 5605180168213876122}
+  SetGridScaleAutomatically: 1
+  SetGridPositionAutomatically: 1
 --- !u!114 &3750396103782625556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,6 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: DualGrid::DualGrid.Core.DualGridMapExperimental
   GridRenderer: {fileID: 2657800623711110825}
+  DualGridComputeShader: {fileID: 7200000, guid: b8344f12355e5452bb23aaf53ec70057, type: 3}
 --- !u!1 &4367446171531397334
 GameObject:
   m_ObjectHideFlags: 0
