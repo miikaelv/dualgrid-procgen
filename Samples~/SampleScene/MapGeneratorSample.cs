@@ -41,6 +41,13 @@ namespace DualGrid.Samples.SampleScene
 
                 return;
             }
+            
+            if (NoiseShader == null)
+            {
+                Debug.LogError($"To use the MapGenerator, assign the NoiseComputeShader to this object from the SampleScene folder.");
+
+                return;
+            }
 
             switch (Mode)
             {

@@ -393,7 +393,6 @@ MonoBehaviour:
   MainCamera: {fileID: 519420031}
   NoiseShader: {fileID: 7200000, guid: 83786ebbe8d694c609982b36e1706c7f, type: 3}
   Mode: 0
-  TilemapCellSize: 1
   MapWidth: 1000
   MapHeight: 1000
   LandGenerationThreshold: 0.5
@@ -764,6 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b0556410d94f75a8c1c2941ec32a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: DualGrid::DualGrid.Core.DualGridMapExperimental
+  LogPerformance: 1
   GridRenderer: {fileID: 2657800623711110825}
   DualGridComputeShader: {fileID: 7200000, guid: b8344f12355e5452bb23aaf53ec70057, type: 3}
 --- !u!1 &4367446171531397334
